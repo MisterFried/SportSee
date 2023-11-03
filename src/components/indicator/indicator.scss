@@ -1,0 +1,27 @@
+.indicator {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr 1fr;
+	align-items: center;
+	gap: 0 2rem;
+
+	padding: 2rem;
+	border-radius: 0.5rem;
+
+	background-color: #ececec;
+
+	&__image {
+		grid-row: span 2;
+	}
+
+	&__value {
+		font-size: 1.5rem;
+		font-weight: 600;
+	}
+
+	&__name {
+		font-weight: 1rem;
+		font-weight: 500;
+		color: var(--clr-textGrey);
+	}
+}

@@ -1,0 +1,33 @@
+.sidebar {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+
+	padding: 1rem;
+
+	background-color: var(--clr-background);
+
+	&__menu {
+		flex-grow: 1;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__menuItem > svg {
+		scale: 0.75;
+	}
+
+	&__copyright {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		font-size: 0.75rem;
+		writing-mode: vertical-lr;
+		color: var(--clr-textLight);
+
+		rotate: 180deg;
+	}
+}

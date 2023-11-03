@@ -1,0 +1,55 @@
+.dashboard {
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 3rem;
+
+	padding: 2rem 3rem;
+
+	&__heading {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 1.5rem;
+	}
+
+	&__title {
+		font-size: 2.5rem;
+
+		b {
+			color: var(--clr-primary);
+		}
+	}
+
+	&__message {
+		font-size: 1rem;
+		font-weight: 500;
+	}
+
+	&__grid {
+		flex-grow: 1;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(4, 1fr);
+		grid-template-areas:
+			"daily daily daily indicator-1"
+			"daily daily daily indicator-2"
+			"time perf score indicator-3"
+			"time perf score indicator-4";
+		gap: 2rem;
+		align-items: center;
+
+		padding: 1rem;
+
+		.indicator:nth-child(2) {
+			grid-area: indicator-1;
+		}
+		.indicator:nth-child(3) {
+			grid-area: indicator-2;
+		}
+		.indicator:nth-child(4) {
+			grid-area: indicator-3;
+		}
+		.indicator:nth-child(5) {
+			grid-area: indicator-4;
+		}
+	}
+}
