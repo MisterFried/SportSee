@@ -30,26 +30,24 @@
 		grid-template-columns: repeat(4, 1fr);
 		grid-template-rows: repeat(4, 1fr);
 		grid-template-areas:
-			"daily daily daily indicator-1"
-			"daily daily daily indicator-2"
-			"time perf score indicator-3"
-			"time perf score indicator-4";
+			"daily daily daily indicator"
+			"daily daily daily indicator"
+			"time perf score indicator"
+			"time perf score indicator";
 		gap: 2rem;
-		align-items: center;
+		align-items: stretch;
+		justify-items: stretch;
 
 		padding: 1rem;
+	}
 
-		.indicator:nth-child(2) {
-			grid-area: indicator-1;
-		}
-		.indicator:nth-child(3) {
-			grid-area: indicator-2;
-		}
-		.indicator:nth-child(4) {
-			grid-area: indicator-3;
-		}
-		.indicator:nth-child(5) {
-			grid-area: indicator-4;
-		}
+	&__indicatorContainer {
+		grid-area: indicator;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		gap: 1rem;
+
+		height: 100%;
 	}
 }

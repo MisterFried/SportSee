@@ -39,9 +39,11 @@ export default function Dashboard() {
 			</div>
 			<div className="dashboard__grid">
 				<DailyActivity />
-				{indicator.map(indicator => (
-					<Indicator content={indicator} />
-				))}
+				<div className="dashboard__indicatorContainer">
+					{indicator.map(indicator => (
+						<Indicator content={indicator} key={crypto.randomUUID()} />
+					))}
+				</div>
 				<Time />
 				<Perf />
 				<Score />
