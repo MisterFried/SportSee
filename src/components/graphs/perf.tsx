@@ -36,7 +36,7 @@ export default function Perf() {
 	useEffect(() => {
 		// Constant
 		const PADDING = 100;
-		const ticks = [10, 20, 30, 40, 50]; // spacing between each circle
+		const ticks = [10, 20, 30, 40, 50]; // spacing between each polyline element
 		const ANGLE_SPACING = 360 / data.length; // spacing between each axis
 		const svg = d3.select(".perf svg");
 
@@ -48,23 +48,18 @@ export default function Perf() {
 		if (ref.current) {
 			WIDTH = ref.current.clientWidth;
 			HEIGHT = ref.current.clientHeight;
-			CHART_RADIUS = WIDTH <= HEIGHT ? WIDTH - PADDING : HEIGHT - PADDING;
+			CHART_RADIUS = WIDTH <= HEIGHT ? (WIDTH - PADDING) / 2 : (HEIGHT - PADDING) / 2;
 		}
 
-		// Generate chart circles
-		const circleScale = d3.scaleLinear([0, ticks[ticks.length - 1]], [0, CHART_RADIUS / 2]);
-		svg.selectAll("circle")
-			.data(ticks)
-			.enter()
-			.append("circle")
-			.attr("cx", WIDTH / 2)
-			.attr("cy", HEIGHT / 2)
-			.attr("fill", "none")
-			.attr("stroke", "#fafafa")
-			.attr("r", data => circleScale(data));
-
-		// Function to convert an angle to coordinate value (used for axis legend + shape drawing)
+		// Function to convert an angle and a value to coordinates
 		function angleToCoordinate(angle: number, value: number) {
+			// Scale to convert a value from something between 0 - max ticks value
+			// to something between - max chart radius
+			const circleScale = d3.scaleLinear([0, ticks[ticks.length - 1]], [0, CHART_RADIUS]);
+			// Cosinus and sinus used the get the x / y coordinate
+			// Add a little angle offset to correspond to the design (+ ANGLE_SPACING / 2)
+			// Convert degrees to radian (Pi/180)
+			// Get the coordinate for the corresponding value (* circleScale)
 			const x = Math.cos((angle + ANGLE_SPACING / 2) * (Math.PI / 180)) * circleScale(value);
 			const y = Math.sin((angle + ANGLE_SPACING / 2) * (Math.PI / 180)) * circleScale(value);
 			return {
@@ -72,6 +67,27 @@ export default function Perf() {
 				y: HEIGHT / 2 + y,
 			};
 		}
+
+		// Generate the coordinate for each axis polylines element
+		const polylineLegendArray: Array<string> = [];
+		ticks.forEach(tick => {
+			let polylineCoordinate = "";
+			for (let i = 0; i <= data.length; i++) {
+				const PointCoordinate = angleToCoordinate(ANGLE_SPACING * i, tick);
+				polylineCoordinate += `${PointCoordinate.x} ${PointCoordinate.y} `;
+			}
+			polylineLegendArray.push(polylineCoordinate);
+		});
+
+		// Generate polylines element
+		svg.selectAll(".axis-ticks")
+			.data(polylineLegendArray)
+			.enter()
+			.append("polyline")
+			.attr("points", polylineLegendArray => polylineLegendArray)
+			.attr("fill", "none")
+			.attr("stroke", "#fafafa")
+			.classed("axis-ticks", true);
 
 		// Generate the coordinate for the axis legend
 		const angleData = data.map((item, index) => {
@@ -93,7 +109,7 @@ export default function Perf() {
 			.attr("x", data => data.coordinate.x)
 			.attr("y", data => data.coordinate.y)
 			.text(data => data.name)
-			.attr("transform", "translate(-27.5,0)")
+			.attr("transform", "translate(-25,0)")
 			.classed("axis-label", true);
 
 		// Generate the coordinate for each axis value point
@@ -101,23 +117,18 @@ export default function Perf() {
 			const angle = ANGLE_SPACING * (index + 1);
 			const value = item.value;
 
-			return {
-				angle: angle,
-				coordinate: angleToCoordinate(angle, value),
-			};
+			return { coordinate: angleToCoordinate(angle, value) };
 		});
 
-		let initialShapeCoordinate = "";
-		let shapeCoordinate = "";
+		let initialShapeCoordinate = ""; // starting point for the animation
+		let shapeCoordinate = ""; // final state of the shape animation
 		valueData.forEach(item => {
 			shapeCoordinate += `${item.coordinate.x}, ${item.coordinate.y} `;
 			initialShapeCoordinate += `${WIDTH / 2}, ${HEIGHT / 2} `;
 		});
 
-		svg.append("g").classed("shape-group", true);
-
-		svg.select(".shape-group")
-			.append("polyline")
+		// Draw the value shape
+		svg.append("polyline")
 			.attr("points", initialShapeCoordinate)
 			.attr("stroke", "none")
 			.attr("fill", "#ff0101")
