@@ -1,7 +1,39 @@
-.timeGraph {
+.timeChart {
 	grid-area: time;
+	position: relative;
 
+	width: 100%;
+	height: 100%;
 	border-radius: 0.5rem;
 
-	background-color: #ececec;
+	background-color: #ff0000;
+
+	&__title {
+		position: absolute;
+		inset: 2rem auto auto 2rem;
+
+		width: 10rem;
+
+		font-size: 1rem;
+		color: #ffa3a3;
+	}
+
+	svg {
+		width: 100%;
+		height: 100%;
+
+		.y-axis line,
+		.y-axis path,
+		.x-axis line,
+		.x-axis path {
+			color: transparent;
+		}
+
+		.y-axis text,
+		.x-axis text {
+			font-size: 1rem;
+			font-family: Roboto;
+			color: #ffa3a3;
+		}
+	}
 }

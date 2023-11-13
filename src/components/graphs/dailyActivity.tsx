@@ -95,7 +95,7 @@ export default function DailyActivity() {
 
 	// Generate the chart
 	useEffect(() => {
-		// constant
+		// Constant
 		const BAR_WIDTH = 10;
 		const BAR_SPACING = 10;
 		const VERTICAL_PADDING = 20;
@@ -137,7 +137,7 @@ export default function DailyActivity() {
 		// Y axis - Calories
 		let maxDisplayCaloriesValue = 0;
 		calories.forEach(el => (maxDisplayCaloriesValue += el.calories));
-		maxDisplayCaloriesValue = Math.ceil((maxDisplayCaloriesValue / lastDay) * 2); // max displayed vallue = 2 * average
+		maxDisplayCaloriesValue = Math.ceil((maxDisplayCaloriesValue / lastDay) * 2); // max displayed value = 2 * average
 		const yScaleCalories = d3.scaleLinear([0, maxDisplayCaloriesValue], [0, CHART_HEIGHT]);
 
 		// Y axis calories legend
