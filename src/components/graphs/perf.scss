@@ -13,5 +13,35 @@
 			fill: var(--clr-textLight);
 			font-size: 0.75rem;
 		}
+
+		#axis-label-0 {
+			translate: -25px 15px;
+		}
+
+		#axis-label-1 {
+			translate: -45px 5px;
+		}
+
+		#axis-label-2 {
+			translate: -40px 0;
+		}
+
+		#axis-label-3 {
+			translate: -25px -10px;
+		}
+
+		#axis-label-4 {
+			translate: 5px 0px;
+		}
+
+		#axis-label-5 {
+			translate: 5px 10px;
+		}
+	}
+}
+
+@media screen and (width < 1440px) {
+	.perf {
+		aspect-ratio: 1 / 1;
 	}
 }

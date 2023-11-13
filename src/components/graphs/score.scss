@@ -39,3 +39,8 @@
 		}
 	}
 }
+@media screen and (width < 1440px) {
+	.score {
+		aspect-ratio: 1 / 1;
+	}
+}

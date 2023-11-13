@@ -97,7 +97,8 @@ export default function Perf() {
 			return {
 				name: item.name,
 				angle: angle,
-				coordinate: angleToCoordinate(angle, value + 10),
+				coordinate: angleToCoordinate(angle, value),
+				index: index,
 			};
 		});
 
@@ -109,8 +110,8 @@ export default function Perf() {
 			.attr("x", data => data.coordinate.x)
 			.attr("y", data => data.coordinate.y)
 			.text(data => data.name)
-			.attr("transform", "translate(-25,0)")
-			.classed("axis-label", true);
+			.classed("axis-label", true)
+			.attr("id", data => `axis-label-${data.index}`);
 
 		// Generate the coordinate for each axis value point
 		const valueData = data.map((item, index) => {

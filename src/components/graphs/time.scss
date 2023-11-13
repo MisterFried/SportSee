@@ -37,3 +37,9 @@
 		}
 	}
 }
+
+@media screen and (width < 1440px) {
+	.timeChart {
+		aspect-ratio: 1 / 1;
+	}
+}

@@ -51,3 +51,24 @@
 		height: 100%;
 	}
 }
+
+@media screen and (width < 1440px) {
+	.dashboard {
+		padding: 2rem 1.5rem;
+
+		&__grid {
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: 20rem auto auto;
+			grid-template-areas:
+				"daily daily daily"
+				"time perf score"
+				"indicator indicator indicator";
+		}
+
+		&__indicatorContainer {
+			flex-flow: row wrap;
+			justify-content: start;
+			gap: 2rem;
+		}
+	}
+}
