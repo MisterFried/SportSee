@@ -1,34 +1,16 @@
 import * as d3 from "d3";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import "./perf.scss";
+import { UserDataContext } from "../..";
+import { PerformanceData } from "../../types/interfaces";
 
 export default function Perf() {
-	const data = [
-		{
-			name: "Endurance",
-			value: 45,
-		},
-		{
-			name: "Energie",
-			value: 40,
-		},
-		{
-			name: "Cardio",
-			value: 25,
-		},
-		{
-			name: "Intensité",
-			value: 25,
-		},
-		{
-			name: "Vitesse",
-			value: 45,
-		},
-		{
-			name: "Force",
-			value: 38,
-		},
-	];
+	let performanceData: PerformanceData;
+
+	const userData = useContext(UserDataContext);
+	if (userData) {
+		performanceData = userData.performance;
+	}
 
 	// Ref to the chart container (div)
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -36,8 +18,8 @@ export default function Perf() {
 	useEffect(() => {
 		// Constant
 		const PADDING = 100;
-		const ticks = [10, 20, 30, 40, 50]; // spacing between each polyline element
-		const ANGLE_SPACING = 360 / data.length; // spacing between each axis
+		const ticks = [50, 100, 150, 200, 250]; // spacing between each polyline element
+		const ANGLE_SPACING = 360 / performanceData.data.data.length; // spacing between each axis
 		const svg = d3.select(".perf svg");
 
 		// width / height of the chart container
@@ -72,7 +54,7 @@ export default function Perf() {
 		const polylineLegendArray: Array<string> = [];
 		ticks.forEach(tick => {
 			let polylineCoordinate = "";
-			for (let i = 0; i <= data.length; i++) {
+			for (let i = 0; i <= performanceData.data.data.length; i++) {
 				const PointCoordinate = angleToCoordinate(ANGLE_SPACING * i, tick);
 				polylineCoordinate += `${PointCoordinate.x} ${PointCoordinate.y} `;
 			}
@@ -90,7 +72,7 @@ export default function Perf() {
 			.classed("axis-ticks", true);
 
 		// Generate the coordinate for the axis legend
-		const angleData = data.map((item, index) => {
+		const angleData = performanceData.data.data.map((item, index) => {
 			const angle = ANGLE_SPACING * (index + 1);
 			const value = ticks[ticks.length - 1];
 
@@ -114,7 +96,7 @@ export default function Perf() {
 			.attr("id", data => `axis-label-${data.index}`);
 
 		// Generate the coordinate for each axis value point
-		const valueData = data.map((item, index) => {
+		const valueData = performanceData.data.data.map((item, index) => {
 			const angle = ANGLE_SPACING * (index + 1);
 			const value = item.value;
 

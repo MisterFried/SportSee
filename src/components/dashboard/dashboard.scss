@@ -52,6 +52,36 @@
 	}
 }
 
+.loading {
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+	gap: 2rem;
+
+	font-size: 2rem;
+}
+
+.loading-icon {
+	animation-name: rotation;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes rotation {
+	0% {
+		rotate: 0deg;
+	}
+	50% {
+		rotate: -180deg;
+	}
+	100% {
+		rotate: -360deg;
+	}
+}
+
 @media screen and (width < 1440px) {
 	.dashboard {
 		padding: 2rem 1.5rem;

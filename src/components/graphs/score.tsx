@@ -1,9 +1,17 @@
 import * as d3 from "d3";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import "./score.scss";
+import { UserDataContext } from "../..";
 
 export default function Score() {
-	const data = 75;
+	const userData = useContext(UserDataContext);
+	let score = 0;
+	let arcType = 0;
+
+	if (userData) {
+		score = userData.userData.data.todayScore === 1 ? 99.999 : userData.userData.data.todayScore * 100;
+		arcType = score <= 50 ? 0 : 1; // largest - smallest arc drawing svg
+	}
 
 	// Ref to the chart container (div)
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -41,7 +49,7 @@ export default function Score() {
 		}
 
 		const startingPoint = angleToCoordinate(0);
-		const endingPoint = angleToCoordinate(data);
+		const endingPoint = angleToCoordinate(score);
 
 		// Background circle
 		svg.append("circle")
@@ -58,7 +66,7 @@ export default function Score() {
 			.attr("stroke-linecap", "round")
 			.attr(
 				"d",
-				`M ${startingPoint.x} ${startingPoint.y} A ${CHART_RADIUS} ${CHART_RADIUS} 0 1 1 ${endingPoint.x} ${endingPoint.y}`
+				`M ${startingPoint.x} ${startingPoint.y} A ${CHART_RADIUS} ${CHART_RADIUS} 0 ${arcType} 1 ${endingPoint.x} ${endingPoint.y}`
 			)
 			.attr("stroke-width", 0)
 			.transition()
@@ -72,7 +80,7 @@ export default function Score() {
 			<svg></svg>
 			<h3 className="score__title">Score</h3>
 			<span className="score__text">
-				<b>{data}%</b> de votre objectif
+				<b>{score === 99.999 ? "100" : score}%</b> de votre objectif
 			</span>
 		</div>
 	);

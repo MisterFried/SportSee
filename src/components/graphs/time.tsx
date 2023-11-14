@@ -1,6 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import "./time.scss";
 import * as d3 from "d3";
+import { UserDataContext } from "../..";
+
+interface sessionData {
+	day: number;
+	sessionLength: number;
+}
 
 interface Coordinate {
 	x: number;
@@ -8,37 +14,11 @@ interface Coordinate {
 }
 
 export default function Time() {
-	// Sample data
-	const data = [
-		{
-			day: 1,
-			time: 60,
-		},
-		{
-			day: 2,
-			time: 55,
-		},
-		{
-			day: 3,
-			time: 65,
-		},
-		{
-			day: 4,
-			time: 58,
-		},
-		{
-			day: 5,
-			time: 40,
-		},
-		{
-			day: 6,
-			time: 67,
-		},
-		{
-			day: 7,
-			time: 60,
-		},
-	];
+	const data: Array<sessionData> = [];
+	const userData = useContext(UserDataContext);
+	if (userData) {
+		userData.averageTime.data.sessions.forEach(session => data.push(session));
+	}
 
 	const ticksLabel = ["L", "M", "M", "J", "V", "S", "D"];
 
@@ -80,10 +60,9 @@ export default function Time() {
 			});
 
 		// Y axis
-		let maxDisplayTimeValue = 0;
-		data.forEach(el => (maxDisplayTimeValue += el.time));
-		maxDisplayTimeValue = Math.ceil((maxDisplayTimeValue / lastDay) * 2); // max displayed value = 2 * average
-		const yScale = d3.scaleLinear([0, maxDisplayTimeValue], [HEIGHT, 0 + VERTICAL_PADDING]);
+		const maxDuration = Math.max(...data.map(session => session.sessionLength));
+		const maxDisplayTimeValue = Math.ceil(maxDuration / 10) * 10 + 10;
+		const yScale = d3.scaleLinear([0, maxDisplayTimeValue], [CHART_HEIGHT, 0 + VERTICAL_PADDING]);
 
 		// Y axis legend
 		const yAxis = d3
@@ -103,11 +82,11 @@ export default function Time() {
 		let curvePath = "";
 		let initialCurvePath = "";
 		const curvePathPointsArray: Array<Coordinate> = [];
-		data.forEach(point => {
-			const pointCoord = pointCoordinate(point.day, point.time);
+		data.forEach(session => {
+			const pointCoord = pointCoordinate(session.day, session.sessionLength);
 			curvePath += `${pointCoord.x} ${pointCoord.y} `;
 			curvePathPointsArray.push({ x: pointCoord.x, y: pointCoord.y });
-			initialCurvePath += `${xScale(point.day)} ${CHART_HEIGHT} `;
+			initialCurvePath += `${xScale(session.day)} ${CHART_HEIGHT} `;
 		});
 
 		// Draw the curve

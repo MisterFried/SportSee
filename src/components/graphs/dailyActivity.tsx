@@ -1,94 +1,25 @@
 import * as d3 from "d3";
 import "./dailyActivity.scss";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { UserDataContext } from "../..";
 
 export default function DailyActivity() {
-	// Sample data
-	const weight = [
-		{
-			day: 1,
-			weight: 60.5,
-		},
-		{
-			day: 2,
-			weight: 63.2,
-		},
-		{
-			day: 3,
-			weight: 68.7,
-		},
-		{
-			day: 4,
-			weight: 61.8,
-		},
-		{
-			day: 5,
-			weight: 66.4,
-		},
-		{
-			day: 6,
-			weight: 65.2,
-		},
-		{
-			day: 7,
-			weight: 67.9,
-		},
-		{
-			day: 8,
-			weight: 62.3,
-		},
-		{
-			day: 9,
-			weight: 69.1,
-		},
-		{
-			day: 10,
-			weight: 64.6,
-		},
-	];
+	const weight: Array<{ day: string; weight: number }> = [];
+	const calories: Array<{ day: string; calories: number }> = [];
 
-	const calories = [
-		{
-			day: 1,
-			calories: 350,
-		},
-		{
-			day: 2,
-			calories: 380,
-		},
-		{
-			day: 3,
-			calories: 320,
-		},
-		{
-			day: 4,
-			calories: 390,
-		},
-		{
-			day: 5,
-			calories: 370,
-		},
-		{
-			day: 6,
-			calories: 310,
-		},
-		{
-			day: 7,
-			calories: 340,
-		},
-		{
-			day: 8,
-			calories: 360,
-		},
-		{
-			day: 9,
-			calories: 395,
-		},
-		{
-			day: 10,
-			calories: 330,
-		},
-	];
+	const userData = useContext(UserDataContext);
+	if (userData) {
+		userData.weeklyData.data.sessions.forEach(session => {
+			weight.push({
+				day: session.day.slice(-2),
+				weight: session.kilogram,
+			});
+			calories.push({
+				day: session.day.slice(-2),
+				calories: session.calories,
+			});
+		});
+	}
 
 	// Ref to the chart container (div)
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -116,10 +47,10 @@ export default function DailyActivity() {
 		}
 
 		// X axis value and scale
-		const firstDay = weight[0].day;
-		const lastDay = weight[weight.length - 1].day;
+		const firstDay = Number(weight[0].day);
+		const lastDay = Number(weight[weight.length - 1].day);
 		const xScale = d3.scaleLinear([firstDay, lastDay], [HORIZONTAL_PADDING, CHART_WIDTH]);
-		const xAxis = d3.axisBottom(xScale);
+		const xAxis = d3.axisBottom(xScale).ticks(weight.length);
 		svg.append("g").attr("transform", `translate(0,${CHART_HEIGHT})`).call(xAxis).classed("x-axis-scale", true);
 
 		// Y axis - Weight
@@ -152,7 +83,7 @@ export default function DailyActivity() {
 			.enter()
 			.append("rect")
 			.classed("rect-weight", true)
-			.attr("x", data => xScale(data.day) + BAR_SPACING / 2)
+			.attr("x", data => xScale(Number(data.day)) + BAR_SPACING / 2)
 			.attr("y", data => CHART_HEIGHT - yScaleWeight(data.weight))
 			.attr("width", BAR_WIDTH)
 			.attr("height", 0)
@@ -167,7 +98,7 @@ export default function DailyActivity() {
 			.enter()
 			.append("rect")
 			.classed("rect-calories", true)
-			.attr("x", data => xScale(data.day) - BAR_SPACING / 2 - BAR_WIDTH)
+			.attr("x", data => xScale(Number(data.day)) - BAR_SPACING / 2 - BAR_WIDTH)
 			.attr("y", data => CHART_HEIGHT - yScaleCalories(data.calories))
 			.attr("width", BAR_WIDTH)
 			.attr("height", 0)
