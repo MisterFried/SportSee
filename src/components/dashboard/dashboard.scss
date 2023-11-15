@@ -84,7 +84,7 @@
 
 @media screen and (width < 1440px) {
 	.dashboard {
-		padding: 2rem 1.5rem;
+		padding: 2rem 1rem;
 
 		&__grid {
 			grid-template-columns: repeat(3, 1fr);
@@ -93,12 +93,13 @@
 				"daily daily daily"
 				"time perf score"
 				"indicator indicator indicator";
+			gap: 1rem;
 		}
 
 		&__indicatorContainer {
 			flex-flow: row wrap;
 			justify-content: start;
-			gap: 2rem;
+			gap: 1rem;
 		}
 	}
 }

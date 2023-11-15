@@ -11,6 +11,7 @@ interface sessionData {
 interface Coordinate {
 	x: number;
 	y: number;
+	duration: number;
 }
 
 export default function Time() {
@@ -78,6 +79,37 @@ export default function Time() {
 			};
 		}
 
+		// Create the tooltip
+		const toolTip = d3
+			.select(".timeChart")
+			.append("div")
+			.style("opacity", 0)
+			.classed("tooltip-time", true)
+			.style("background-color", "white")
+			.style("border", "solid")
+			.style("border-width", "1px")
+			.style("border-radius", "5px")
+			.style("padding", "5px");
+
+		// Function to change the tooltip when hovering / moving / leaving the chart bar
+		// Hover
+		function mouseHover() {
+			toolTip.style("opacity", 1);
+		}
+
+		// Move
+		function mouseMove(event: MouseEvent, data: Coordinate) {
+			toolTip
+				.style("top", `${d3.pointer(event)[1]}px`)
+				.style("left", `${d3.pointer(event)[0] + 15}px`)
+				.html(`Durée : ${data.duration} min`);
+		}
+
+		//Leave
+		function mouseLeave() {
+			toolTip.style("opacity", 0);
+		}
+
 		// Path element for the curve
 		let curvePath = "";
 		let initialCurvePath = "";
@@ -85,7 +117,7 @@ export default function Time() {
 		data.forEach(session => {
 			const pointCoord = pointCoordinate(session.day, session.sessionLength);
 			curvePath += `${pointCoord.x} ${pointCoord.y} `;
-			curvePathPointsArray.push({ x: pointCoord.x, y: pointCoord.y });
+			curvePathPointsArray.push({ x: pointCoord.x, y: pointCoord.y, duration: session.sessionLength });
 			initialCurvePath += `${xScale(session.day)} ${CHART_HEIGHT} `;
 		});
 
@@ -102,14 +134,20 @@ export default function Time() {
 			.attr("points", curvePath);
 
 		// Round up the curves corner
-		svg.selectAll(".curve-corner")
+		const circles = svg
+			.selectAll(".curve-corner")
 			.data(curvePathPointsArray)
 			.enter()
 			.append("circle")
 			.attr("fill", "#ffa3a3")
-			.attr("r", 3)
+			.attr("r", 5)
 			.attr("cx", data => data.x)
 			.attr("cy", CHART_HEIGHT)
+			.on("mouseover", mouseHover)
+			.on("mousemove", (event, data) => mouseMove(event, data))
+			.on("mouseleave", mouseLeave);
+
+		circles
 			.transition()
 			.duration(1000)
 			.ease(d3.easePoly.exponent(3))

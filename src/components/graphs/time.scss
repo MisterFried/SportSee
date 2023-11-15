@@ -10,7 +10,7 @@
 
 	&__title {
 		position: absolute;
-		inset: 2rem auto auto 2rem;
+		inset: 1rem auto auto 1rem;
 
 		width: 10rem;
 
@@ -35,6 +35,9 @@
 			font-family: Roboto;
 			color: #ffa3a3;
 		}
+	}
+	.tooltip-time {
+		position: absolute;
 	}
 }
 
