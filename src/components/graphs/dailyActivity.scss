@@ -13,13 +13,16 @@
 	padding: 1rem;
 	border-radius: 0.5rem;
 
-	background-color: #ececec;
+	background-color: #fbfbfb;
 
 	&__title {
 		grid-area: title;
 
+		padding: 0.5rem 1rem;
+
 		font-size: 1rem;
 		font-weight: 500;
+		color: #20253A;
 	}
 
 	&__legend {
@@ -27,10 +30,14 @@
 		display: flex;
 		gap: 3rem;
 
+		padding: 0.5rem 1rem;
+
 		span {
 			position: relative;
 
 			font-size: 1rem;
+			font-weight: 500;
+			color: #74798C;
 
 			&::before {
 				content: "";

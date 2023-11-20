@@ -30,7 +30,7 @@ export default function DailyActivity() {
 		const BAR_WIDTH = 10;
 		const BAR_SPACING = 10;
 		const VERTICAL_PADDING = 20;
-		const HORIZONTAL_PADDING = 50;
+		const HORIZONTAL_PADDING = 70;
 		const svg = d3.select(".dailyActivity__graph svg");
 
 		// width / height of the chart container

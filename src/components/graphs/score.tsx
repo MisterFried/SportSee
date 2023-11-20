@@ -56,7 +56,7 @@ export default function Score() {
 			.attr("cx", `${WIDTH / 2}`)
 			.attr("cy", `${HEIGHT / 2}`)
 			.attr("r", `${CHART_RADIUS - BAR_WIDTH / 2}`)
-			.attr("fill", "#fafafa")
+			.attr("fill", "#fff")
 			.attr("stroke", "none");
 
 		// Bar

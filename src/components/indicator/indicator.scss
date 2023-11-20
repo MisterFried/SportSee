@@ -8,7 +8,7 @@
 	padding: 2rem;
 	border-radius: 0.5rem;
 
-	background-color: #ececec;
+	background-color: #fbfbfb;
 
 	&__image {
 		grid-row: span 2;
@@ -17,10 +17,11 @@
 	&__value {
 		font-size: 1.5rem;
 		font-weight: 600;
+		color: #282D30;
 	}
 
 	&__name {
-		font-weight: 1rem;
+		font-size: 1rem;
 		font-weight: 500;
 		color: var(--clr-textGrey);
 	}

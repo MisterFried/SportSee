@@ -12,6 +12,8 @@
 		.axis-label {
 			fill: var(--clr-textLight);
 			font-size: 0.75rem;
+			font-weight: 500;
+			text-transform: capitalize;
 		}
 
 		#axis-label-0 {
@@ -19,11 +21,11 @@
 		}
 
 		#axis-label-1 {
-			translate: -45px 5px;
+			translate: -40px 5px;
 		}
 
 		#axis-label-2 {
-			translate: -65px 0;
+			translate: -60px 0;
 		}
 
 		#axis-label-3 {

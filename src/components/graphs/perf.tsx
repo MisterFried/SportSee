@@ -115,7 +115,7 @@ export default function Perf() {
 			.attr("points", initialShapeCoordinate)
 			.attr("stroke", "none")
 			.attr("fill", "#ff0101")
-			.attr("fill-opacity", 0.7)
+			.attr("fill-opacity", 0.6)
 			.classed("shape", true)
 			.transition()
 			.duration(1000)
