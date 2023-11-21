@@ -14,6 +14,11 @@ interface Coordinate {
 	duration: number;
 }
 
+interface DataPoint {
+	x: number;
+	y: number;
+}
+
 export default function Time() {
 	const data: Array<sessionData> = [];
 	const userData = useContext(UserDataContext);
@@ -79,6 +84,15 @@ export default function Time() {
 			};
 		}
 
+		const dataCoordinate = data.map(element => pointCoordinate(element.day, element.sessionLength));
+		const dataCoordinateInitial: Array<{ x: number; y: number }> = [];
+		data.forEach(element => {
+			dataCoordinateInitial.push({
+				x: pointCoordinate(element.day, element.sessionLength).x,
+				y: CHART_HEIGHT,
+			});
+		});
+
 		// Create the tooltip
 		const toolTip = d3
 			.select(".timeChart")
@@ -110,28 +124,31 @@ export default function Time() {
 			toolTip.style("opacity", 0);
 		}
 
-		// Path element for the curve
-		let curvePath = "";
-		let initialCurvePath = "";
 		const curvePathPointsArray: Array<Coordinate> = [];
 		data.forEach(session => {
 			const pointCoord = pointCoordinate(session.day, session.sessionLength);
-			curvePath += `${pointCoord.x} ${pointCoord.y} `;
 			curvePathPointsArray.push({ x: pointCoord.x, y: pointCoord.y, duration: session.sessionLength });
-			initialCurvePath += `${xScale(session.day)} ${CHART_HEIGHT} `;
 		});
 
-		// Draw the curve
-		svg.append("polyline")
+		// Curve interpolation function
+		const curve = d3.curveCardinal;
+
+		//Line generator
+		const line = d3
+			.line<DataPoint>()
+			.x(d => d.x)
+			.y(d => d.y)
+			.curve(curve);
+
+		const path = svg
+			.append("path")
+			.data([dataCoordinateInitial])
+			.attr("d", line)
 			.attr("fill", "none")
 			.attr("stroke", "#ffa3a3")
-			.attr("stroke-width", 3)
-			.classed("curve", true)
-			.attr("points", initialCurvePath)
-			.transition()
-			.duration(1000)
-			.ease(d3.easePoly.exponent(3))
-			.attr("points", curvePath);
+			.attr("stroke-width", 3);
+
+		path.transition().duration(1000).ease(d3.easePoly.exponent(3)).attr("d", line(dataCoordinate));
 
 		// Round up the curves corner
 		const circles = svg
