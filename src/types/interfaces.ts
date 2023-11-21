@@ -1,51 +1,41 @@
 export interface UserData {
-	data: {
-		id: number;
-		userInfos: { firstName: string; lastName: string; age: number };
-		todayScore: number;
-		score?: number;
-		keyData: { calorieCount: number; proteinCount: number; carbohydrateCount: number; lipidCount: number };
-	};
+	id: number;
+	userInfos: { firstName: string; lastName: string; age: number };
+	keyData: { calorieCount: number; proteinCount: number; carbohydrateCount: number; lipidCount: number };
+}
+
+export interface UserData_1 extends UserData {
+	todayScore: number;
+}
+
+export interface UserData_2 extends UserData {
+	score: number;
 }
 
 export interface WeeklyData {
-	data: {
-		userId: number;
-		sessions: Array<{
-			day: string;
-			kilogram: number;
-			calories: number;
-		}>;
-	};
+	userId: number;
+	sessions: Array<{
+		day: string;
+		kilogram: number;
+		calories: number;
+	}>;
 }
 
 export interface PerformanceData {
-	data: {
-		userId: number;
-		kind: {
-			[key: string]: string;
-		};
-		data: Array<{
-			value: number;
-			kind: number;
-			name: string;
-		}>;
+	userId: number;
+	kind: {
+		[key: string]: string;
 	};
+	data: Array<{
+		value: number;
+		kind: number;
+	}>;
 }
 
-export interface AverageTimeData {
-	data: {
-		userId: number;
-		sessions: Array<{
-			day: number;
-			sessionLength: number;
-		}>;
-	};
-}
-
-export interface GlobalUserData {
-	userData: UserData;
-	weeklyData: WeeklyData;
-	averageTime: AverageTimeData;
-	performance: PerformanceData;
+export interface SessionDurationData {
+	userId: number;
+	sessions: Array<{
+		day: number;
+		sessionLength: number;
+	}>;
 }

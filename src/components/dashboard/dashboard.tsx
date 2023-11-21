@@ -1,52 +1,67 @@
 import { useEffect, useState } from "react";
-import { fetchUserData } from "../../script/fetchData";
-import DailyActivity from "../graphs/dailyActivity";
-import Perf from "../graphs/perf";
-import Score from "../graphs/score";
-import Time from "../graphs/time";
+import { fetchUserData } from "../../api/fetchData";
+import WeeklyRecap from "../graphs/weeklyRecap";
 import Indicator from "../indicator/indicator";
 import "./dashboard.scss";
-import { UserDataContext } from "../..";
-import { GlobalUserData } from "../../types/interfaces";
+import { UserData_1 } from "../../types/interfaces";
 
 export default function Dashboard() {
-	const [userData, setUserData] = useState<GlobalUserData>();
+	const [userData, setUserData] = useState<UserData_1>();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		async function fetchGlobalUserData() {
-			const response = await fetchUserData();
+		async function fetchData() {
+			setLoading(true);
+			const userData = await fetchUserData();
 
-			if (response) {
-				setUserData(response);
+			if (userData) {
+				setUserData(userData);
 			} else {
-				console.log("Error during data fetching");
+				setError(true);
 			}
+			setLoading(false);
 		}
 
-		fetchGlobalUserData();
+		fetchData();
 	}, []);
 
+	if (loading) {
+		<section className="loading">
+			<p className="loading-text">Chargement des données en cours</p>
+			<img className="loading-icon" src="/images/loading.png" alt="Chargement" />
+		</section>;
+	}
+
+	if (error) {
+		return (
+			<section className="loading">
+				<p className="loading-text">Erreur</p>
+			</section>
+		);
+	}
+
 	if (userData) {
-		const userName = userData.userData.data.userInfos.firstName;
+		const userName = userData.userInfos.firstName;
 		const indicator = [
 			{
 				name: "Calories",
-				value: userData.userData.data.keyData.calorieCount,
+				value: userData.keyData.calorieCount,
 				icon: "calories-icon.svg",
 			},
 			{
 				name: "Protéines",
-				value: userData.userData.data.keyData.proteinCount,
+				value: userData.keyData.proteinCount,
 				icon: "protein-icon.svg",
 			},
 			{
 				name: "Glucides",
-				value: userData.userData.data.keyData.carbohydrateCount,
+				value: userData.keyData.carbohydrateCount,
 				icon: "carbs-icon.svg",
 			},
 			{
 				name: "Lipides",
-				value: userData.userData.data.keyData.lipidCount,
+				value: userData.keyData.lipidCount,
 				icon: "fat-icon.svg",
 			},
 		];
@@ -60,25 +75,16 @@ export default function Dashboard() {
 					<h2 className="dashboard__message">Félicitation ! Vous avez explosé vos objectifs hier 👏</h2>
 				</div>
 				<div className="dashboard__grid">
-					<UserDataContext.Provider value={userData}>
-						<DailyActivity />
-						<div className="dashboard__indicatorContainer">
-							{indicator.map(indicator => (
-								<Indicator content={indicator} key={crypto.randomUUID()} />
-							))}
-						</div>
-						<Time />
-						<Perf />
-						<Score />
-					</UserDataContext.Provider>
+					<WeeklyRecap />
+					<div className="dashboard__indicatorContainer">
+						{indicator.map(indicator => (
+							<Indicator content={indicator} key={crypto.randomUUID()} />
+						))}
+					</div>
+					{/* <Time /> */}
+					{/* <Perf /> */}
+					{/* <Score /> */}
 				</div>
-			</section>
-		);
-	} else {
-		return (
-			<section className="loading">
-				<p className="loading-text">Chargement des données en cours</p>
-				<img className="loading-icon" src="/images/loading.png" alt="Chargement" />
 			</section>
 		);
 	}
