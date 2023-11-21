@@ -27,23 +27,25 @@ export default function Dashboard() {
 	}, []);
 
 	if (loading) {
-		<section className="loading">
-			<p className="loading-text">Chargement des données en cours</p>
-			<img className="loading-icon" src="/images/loading.png" alt="Chargement" />
-		</section>;
+		return (
+			<section className="loading">
+				<p className="loading-text">Chargement des données en cours</p>
+				<img className="loading-icon" src="/images/loading.png" alt="Chargement" />
+			</section>
+		);
 	}
 
 	if (error) {
 		return (
 			<section className="loading">
-				<p className="loading-text">Erreur</p>
+				<p className="loading-text">Une erreur est survenue lors de la récupération des données utilisateur</p>
 			</section>
 		);
 	}
 
 	if (userData) {
 		const userName = userData.userInfos.firstName;
-		const indicator = [
+		const indicators = [
 			{
 				name: "Calories",
 				value: userData.keyData.calorieCount,
@@ -77,7 +79,7 @@ export default function Dashboard() {
 				<div className="dashboard__grid">
 					<WeeklyRecap />
 					<div className="dashboard__indicatorContainer">
-						{indicator.map(indicator => (
+						{indicators.map(indicator => (
 							<Indicator content={indicator} key={crypto.randomUUID()} />
 						))}
 					</div>
