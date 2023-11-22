@@ -1,4 +1,11 @@
-import { PerformanceData, SessionDurationData, UserData_1, UserData_2, WeeklyData } from "../types/interfaces";
+import {
+	PerformanceData,
+	PerformanceResponse,
+	SessionDurationData,
+	UserData_1,
+	UserData_2,
+	WeeklyRecapData,
+} from "../types/interfaces";
 
 const userID = 12;
 
@@ -26,7 +33,7 @@ export async function fechUserWeeklyRecap() {
 	try {
 		const response = await fetch(`http://localhost:3000/user/${userID}/activity`);
 		const responseJSON = await response.json();
-		const weeklyRecap: WeeklyData = responseJSON.data;
+		const weeklyRecap: WeeklyRecapData = responseJSON.data;
 		return weeklyRecap;
 	} catch (error) {
 		console.log(error);
@@ -48,8 +55,12 @@ export async function fetchUserPerformance() {
 	try {
 		const response = await fetch(`http://localhost:3000/user/${userID}/performance`);
 		const responseJSON = await response.json();
-		const performance: PerformanceData = responseJSON.data;
-		console.log(performance);
+		const performanceResponse: PerformanceResponse = responseJSON.data;
+		// Gather the kind & value in the same array of object before
+		const performance: Array<PerformanceData> = performanceResponse.data.map(element => {
+			return { ...element, name: performanceResponse.kind[element.kind] };
+		});
+		return performance;
 	} catch (error) {
 		console.log(error);
 	}

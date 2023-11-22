@@ -1,24 +1,23 @@
 import * as d3 from "d3";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./score.scss";
-import { UserDataContext } from "../..";
 
-export default function Score() {
-	const userData = useContext(UserDataContext);
-	let score = 0;
-	let arcType = 0;
+interface Props {
+	value: number;
+}
 
-	if (userData) {
-		score = userData.userData.data.todayScore === 1 ? 99.999 : userData.userData.data.todayScore * 100;
-		arcType = score <= 50 ? 0 : 1; // largest - smallest arc drawing svg
-	}
+export default function Score(props: Props) {
+	const { value } = props;
+	const ref = useRef<HTMLDivElement>(null); // div containing the chart ref
 
-	// Ref to the chart container (div)
-	const ref = useRef<HTMLDivElement | null>(null);
+	// The score is set to 99.999% when it's at 100% because otherwise
+	// the arc is just a point (end point = start point at 100%)
+	const score = value === 1 ? 99.999 : value * 100;
+	const arcType = score <= 50 ? 0 : 1; // largest or smallest arc (svg arc parameter)
 
 	useEffect(() => {
 		// Constant
-		const PADDING = 100;
+		const PADDING = 50;
 		const BAR_WIDTH = 15;
 		const svg = d3.select(".score svg");
 
@@ -33,13 +32,11 @@ export default function Score() {
 			CHART_RADIUS = WIDTH <= HEIGHT ? (WIDTH - PADDING) / 2 : (HEIGHT - PADDING) / 2;
 		}
 
-		// Function to convert a percentage to coordinate value (used the path end point drawing)
-		function angleToCoordinate(value: number) {
-			// Cosinus and sinus used the get the x / y coordinate
-			// Conversion of the percentage value to an angle in degrees (*3.6)
+		// Function to convert a percentage to coordinate value
+		function valueToCoordinate(value: number) {
+			// Cosinus and sinus are used to convert an angle (in radians) to x/y coordinate
+			// The value is converted from a percentage (0-100) to an angle (0-360)
 			// Offset of 90 degrees to start in the center of the top side (-90deg)
-			// Convert degrees to radian (Pi/180)
-			// Get the coordinate for the corresponding chart radius (*CHART_RADIUS)
 			const x = Math.cos((value * 3.6 - 90) * (Math.PI / 180)) * CHART_RADIUS;
 			const y = Math.sin((value * 3.6 - 90) * (Math.PI / 180)) * CHART_RADIUS;
 			return {
@@ -48,10 +45,11 @@ export default function Score() {
 			};
 		}
 
-		const startingPoint = angleToCoordinate(0);
-		const endingPoint = angleToCoordinate(score);
+		// Generate the coordinate for the starting and ending point of the arc
+		const startingPoint = valueToCoordinate(0);
+		const endingPoint = valueToCoordinate(score);
 
-		// Background circle
+		// Generate Background circle
 		svg.append("circle")
 			.attr("cx", `${WIDTH / 2}`)
 			.attr("cy", `${HEIGHT / 2}`)
@@ -59,7 +57,7 @@ export default function Score() {
 			.attr("fill", "#fff")
 			.attr("stroke", "none");
 
-		// Bar
+		// Generate the arc
 		svg.append("path")
 			.attr("fill", "none")
 			.attr("stroke", "#ff0101")

@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { fetchUserData } from "../../api/fetchData";
-import WeeklyRecap from "../graphs/weeklyRecap";
-import Indicator from "../indicator/indicator";
+import WeeklyRecap from "../../components/charts/weeklyRecap";
+import Performance from "../../components/charts/performance.tsx";
+import Score from "../../components/charts/score.tsx";
+import Indicator from "../../components/indicator/indicator";
 import "./dashboard.scss";
 import { UserData_1 } from "../../types/interfaces";
+import SessionDuration from "../../components/charts/sessionDuration.tsx";
 
 export default function Dashboard() {
+	// State initialization
 	const [userData, setUserData] = useState<UserData_1>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 
+	// Fetching data after component mount
 	useEffect(() => {
 		async function fetchData() {
 			setLoading(true);
@@ -26,6 +31,7 @@ export default function Dashboard() {
 		fetchData();
 	}, []);
 
+	// Display a loading message during data fetching
 	if (loading) {
 		return (
 			<section className="loading">
@@ -35,6 +41,7 @@ export default function Dashboard() {
 		);
 	}
 
+	// Display error message if data fetching failed
 	if (error) {
 		return (
 			<section className="loading">
@@ -43,6 +50,7 @@ export default function Dashboard() {
 		);
 	}
 
+	// Display the dashboard once data are fetched and no error occured
 	if (userData) {
 		const userName = userData.userInfos.firstName;
 		const indicators = [
@@ -83,9 +91,9 @@ export default function Dashboard() {
 							<Indicator content={indicator} key={crypto.randomUUID()} />
 						))}
 					</div>
-					{/* <Time /> */}
-					{/* <Perf /> */}
-					{/* <Score /> */}
+					<SessionDuration />
+					<Performance />
+					<Score value={userData.todayScore} />
 				</div>
 			</section>
 		);

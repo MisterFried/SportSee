@@ -1,9 +1,13 @@
-.perf {
+.performance {
 	grid-area: perf;
+	display: grid;
+	place-items: center;
 
 	border-radius: 0.5rem;
 
 	background-color: #282d30;
+	text-align: center;
+	color: #fafafa;
 
 	svg {
 		width: 100%;
@@ -16,27 +20,27 @@
 			text-transform: capitalize;
 		}
 
-		#axis-label-0 {
+		#axis-label-1 {
 			translate: -15px 15px;
 		}
 
-		#axis-label-1 {
+		#axis-label-2 {
 			translate: -40px 5px;
 		}
 
-		#axis-label-2 {
+		#axis-label-3 {
 			translate: -60px 0;
 		}
 
-		#axis-label-3 {
+		#axis-label-4 {
 			translate: -25px -10px;
 		}
 
-		#axis-label-4 {
+		#axis-label-5 {
 			translate: 5px 0px;
 		}
 
-		#axis-label-5 {
+		#axis-label-6 {
 			translate: 5px 10px;
 		}
 	}

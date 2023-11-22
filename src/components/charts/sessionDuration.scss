@@ -1,5 +1,7 @@
-.timeChart {
+.sessionDuration {
 	grid-area: time;
+	display: grid;
+	place-items: center;
 	position: relative;
 
 	width: 100%;
@@ -7,6 +9,8 @@
 	border-radius: 0.5rem;
 
 	background-color: #ff0000;
+	color: #fafafa;
+	text-align: center;
 
 	&__title {
 		position: absolute;
@@ -15,6 +19,7 @@
 		width: 10rem;
 
 		font-size: 1rem;
+		text-align: left;
 		color: #ffa3a3;
 	}
 
@@ -36,13 +41,20 @@
 			color: #ffa3a3;
 		}
 	}
-	.tooltip-time {
+	.tooltip-sessionDuration {
 		position: absolute;
+
+		padding: 0.5rem;
+		border: 1px solid #282d30;
+		border-radius: 5px;
+
+		background-color: white;
+		color: #282d30;
 	}
 }
 
 @media screen and (width < 1440px) {
-	.timeChart {
+	.sessionDuration {
 		aspect-ratio: 1 / 1;
 	}
 }

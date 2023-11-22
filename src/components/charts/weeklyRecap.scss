@@ -1,11 +1,11 @@
-.dailyActivity {
+.weeklyRecap {
 	grid-area: daily;
 	display: grid;
 	grid-template-columns: 1fr auto;
 	grid-template-rows: auto 1fr;
 	grid-template-areas:
 		"title legend"
-		"graph graph";
+		"chart chart";
 	gap: 1rem;
 
 	width: 100%;
@@ -60,8 +60,8 @@
 		}
 	}
 
-	&__graph {
-		grid-area: graph;
+	&__chart {
+		grid-area: chart;
 
 		svg {
 			width: 100%;

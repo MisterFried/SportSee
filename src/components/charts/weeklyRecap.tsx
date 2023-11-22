@@ -1,12 +1,12 @@
 import * as d3 from "d3";
 import "./weeklyRecap.scss";
 import { useEffect, useRef, useState } from "react";
-import { WeeklyData } from "../../types/interfaces";
+import { WeeklyRecapData } from "../../types/interfaces";
 import { fechUserWeeklyRecap } from "../../api/fetchData";
 
 export default function WeeklyRecap() {
 	// State initialization
-	const [weeklyRecap, setWeeklyRecap] = useState<WeeklyData>();
+	const [weeklyRecap, setWeeklyRecap] = useState<WeeklyRecapData>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const ref = useRef<HTMLDivElement>(null); // div containing the chart ref
@@ -54,7 +54,7 @@ export default function WeeklyRecap() {
 			const BAR_SPACING = 10;
 			const VERTICAL_PADDING = 20;
 			const HORIZONTAL_PADDING = 70;
-			const svg = d3.select(".dailyActivity__graph svg");
+			const svg = d3.select(".weeklyRecap__chart svg");
 
 			// Width / height of the chart + its container
 			let WIDTH = 0;
@@ -110,7 +110,7 @@ export default function WeeklyRecap() {
 
 			// Create the tooltip
 			const toolTip = d3
-				.select(".dailyActivity__graph")
+				.select(".weeklyRecap__chart")
 				.append("div")
 				.style("opacity", 0)
 				.classed("tooltip-weeklyRecap", true);
@@ -202,24 +202,24 @@ export default function WeeklyRecap() {
 
 	// Display a loading message during the data fetching
 	if (loading) {
-		return <div className="dailyActivity">Chargement en cours</div>;
+		return <div className="weeklyRecap">Chargement en cours</div>;
 	}
 
 	// Display error message if the data fetching failed
 	if (error) {
-		return <div className="dailyActivity">Erreur</div>;
+		return <div className="weeklyRecap">Une erreur est survenue lors de la récupération des données du récapitulatif hébdomadaire</div>;
 	}
 
 	// Display the chart once data are fetched and no error occured
 	if (weeklyRecap) {
 		return (
-			<div className="dailyActivity">
-				<h3 className="dailyActivity__title">Activité quotidienne</h3>
-				<div className="dailyActivity__legend">
+			<div className="weeklyRecap">
+				<h3 className="weeklyRecap__title">Activité quotidienne</h3>
+				<div className="weeklyRecap__legend">
 					<span>Poids (kg)</span>
 					<span>Calories brûlées (kCal)</span>
 				</div>
-				<div ref={ref} className="dailyActivity__graph">
+				<div ref={ref} className="weeklyRecap__chart">
 					<svg></svg>
 				</div>
 			</div>
