@@ -33,7 +33,7 @@ export default function Performance() {
 		// Prevent the initial trigger when component mount but data hasn't been fetched yet
 		if (performance) {
 			// Constant
-			const PADDING = 40;
+			const PADDING = 50;
 			const ticks = [50, 100, 150, 200, 250]; // spacing between each polyline element
 			const ANGLE_SPACING = 360 / performance.length; // spacing between each axis
 			const svg = d3.select(".performance svg");
