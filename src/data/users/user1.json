@@ -1,0 +1,86 @@
+{
+	"id": 1,
+	"infos": {
+		"firstName": "Eliot",
+		"lastName": "Winter",
+		"age": 24
+	},
+	"todayScore": 75,
+	"keyData": {
+		"calories": 1930,
+		"proteins": 155,
+		"carbohydrates": 290,
+		"lipids": 50
+	},
+	"sessions": [
+		{
+			"day": "2020-07-01",
+			"weight": 80,
+			"burnedCalories": 240,
+			"duration": 30
+		},
+		{
+			"day": "2020-07-02",
+			"weight": 80,
+			"burnedCalories": 220,
+			"duration": 25
+		},
+		{
+			"day": "2020-07-03",
+			"weight": 81,
+			"burnedCalories": 280,
+			"duration": 20
+		},
+		{
+			"day": "2020-07-04",
+			"weight": 81,
+			"burnedCalories": 290,
+			"duration": 35
+		},
+		{
+			"day": "2020-07-05",
+			"weight": 80,
+			"burnedCalories": 160,
+			"duration": 15
+		},
+		{
+			"day": "2020-07-06",
+			"weight": 78,
+			"burnedCalories": 162,
+			"duration": 35
+		},
+		{
+			"day": "2020-07-07",
+			"weight": 76,
+			"burnedCalories": 390,
+			"duration": 25
+		}
+	],
+	"performances": [
+		{
+			"category": "Cardio",
+			"score": 50,
+			"goal": 85
+		},
+		{
+			"category": "Force",
+			"score": 65,
+			"goal": 90
+		},
+		{
+			"category": "Vitesse",
+			"score": 70,
+			"goal": 80
+		},
+		{
+			"category": "Energie",
+			"score": 68,
+			"goal": 100
+		},
+		{
+			"category": "Endurance",
+			"score": 70,
+			"goal": 100
+		}
+	]
+}

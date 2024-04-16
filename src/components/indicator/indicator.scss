@@ -5,24 +5,27 @@
 	align-items: center;
 	gap: 0 2rem;
 
-	padding: 2rem;
+	width: 15rem;
+	padding: 1rem;
 	border-radius: 0.5rem;
+	border: 1px solid var(--clr-textLight);
 
-	background-color: #fbfbfb;
+	background-color: var(--clr-chart-background);
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 
 	&__image {
 		grid-row: span 2;
 	}
 
 	&__value {
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		font-weight: 600;
-		color: #282d30;
+		color: var(--clr-text);
 	}
 
 	&__name {
 		font-size: 1rem;
-		font-weight: 500;
-		color: var(--clr-textGrey);
+		font-weight: 400;
+		color: var(--clr-text);
 	}
 }

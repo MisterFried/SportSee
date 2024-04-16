@@ -32,14 +32,38 @@ html {
 	scroll-behavior: smooth;
 }
 
-// Base stuff
 :root {
-	--clr-primary: #ff0101;
-	--clr-background: #0c0c0c;
-	--clr-textGrey: #74798c;
-	--clr-textLight: #fafafa;
+	--clr-primary-50: #fff3e7;
+	--clr-primary-100: #ffe7cf;
+	--clr-primary-200: #ffcfa0;
+	--clr-primary-300: #ffb870;
+	--clr-primary-400: #ffa041;
+	--clr-primary-500: #ff8811;
+	--clr-primary-600: #cc6d0e;
+	--clr-primary-700: #99520a;
+	--clr-primary-800: #663607;
+	--clr-primary-900: #331b03;
 
-	font-family: "Roboto", sans-serif;
+	--clr-secondary-50: #fefaf1;
+	--clr-secondary-100: #fdf6e2;
+	--clr-secondary-200: #fbecc5;
+	--clr-secondary-300: #f8e3a9;
+	--clr-secondary-400: #f6d98c;
+	--clr-secondary-500: #f4d06f;
+	--clr-secondary-600: #c3a659;
+	--clr-secondary-700: #927d43;
+	--clr-secondary-800: #62532c;
+	--clr-secondary-900: #312a16;
+
+	--clr-main-background: #f5f5f5;
+	--clr-chart-background: #fafafa;
+	--clr-chart-background-dark: #282d30;
+	--clr-layout-background: #0c0c0c;
+
+	--clr-text: #0c0c0c;
+	--clr-textLight: #e7e7e7;
+
+	font-family: "Roboto", sansserif;
 }
 
 html,

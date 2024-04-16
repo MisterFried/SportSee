@@ -1,0 +1,81 @@
+{
+	"id": 2,
+	"infos": {
+		"firstName": "Alice",
+		"lastName": "Smith",
+		"age": 30
+	},
+	"todayScore": 60,
+	"keyData": {
+		"calories": 2000,
+		"proteins": 160,
+		"carbohydrates": 300,
+		"lipids": 55
+	},
+	"sessions": [
+		{
+			"day": "2020-07-08",
+			"weight": 79,
+			"burnedCalories": 250,
+			"duration": 25
+		},
+		{
+			"day": "2020-07-09",
+			"weight": 78,
+			"burnedCalories": 230,
+			"duration": 20
+		},
+		{
+			"day": "2020-07-10",
+			"weight": 77,
+			"burnedCalories": 270,
+			"duration": 28
+		},
+		{
+			"day": "2020-07-11",
+			"weight": 76,
+			"burnedCalories": 280,
+			"duration": 30
+		},
+		{
+			"day": "2020-07-12",
+			"weight": 77,
+			"burnedCalories": 170,
+			"duration": 30
+		},
+		{
+			"day": "2020-07-13",
+			"weight": 76,
+			"burnedCalories": 172,
+			"duration": 30
+		},
+		{
+			"day": "2020-07-14",
+			"weight": 75,
+			"burnedCalories": 400,
+			"duration": 30
+		}
+	],
+	"performance": {
+		"cardio": {
+			"goal": 80,
+			"current": 70
+		},
+		"strength": {
+			"goal": 95,
+			"current": 95
+		},
+		"speed": {
+			"goal": 65,
+			"current": 60
+		},
+		"endurance": {
+			"goal": 90,
+			"current": 95
+		},
+		"energy": {
+			"goal": 80,
+			"current": 75
+		}
+	}
+}

@@ -1,3 +1,4 @@
+// TODO : Change the display grid to something more responsive with auto-fit and auto-columns
 .dashboard {
 	display: flex;
 	flex-flow: column nowrap;
@@ -16,7 +17,7 @@
 		font-size: 2.5rem;
 
 		b {
-			color: var(--clr-primary);
+			color: var(--clr-primary-400);
 		}
 	}
 
@@ -25,31 +26,28 @@
 		font-weight: 500;
 	}
 
-	&__grid {
-		flex-grow: 1;
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		grid-template-rows: repeat(4, 1fr);
-		grid-template-areas:
-			"daily daily daily indicator"
-			"daily daily daily indicator"
-			"time perf score indicator"
-			"time perf score indicator";
+	&__content {
+		display: flex;
+		justify-content: center;
 		gap: 2rem;
-		align-items: stretch;
-		justify-items: stretch;
-
-		padding: 1rem;
 	}
 
-	&__indicatorContainer {
-		grid-area: indicator;
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: space-between;
-		gap: 1rem;
+	&__charts {
+		--column-count: 3;
+		--column-max-size: 300px;
+		--row-size: 300px;
 
-		height: 100%;
+		display: grid;
+		grid-template-columns: repeat(var(--column-count), minmax(min(var(--column-max-size), 100%), 1fr));
+		grid-template-rows: var(--row-size) auto;
+
+		gap: 2rem;
+	}
+
+	&__indicators {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
 	}
 }
 
@@ -85,22 +83,34 @@
 
 @media screen and (width < 1440px) {
 	.dashboard {
-		padding: 2rem 1rem;
-
-		&__grid {
-			grid-template-columns: repeat(3, 1fr);
-			grid-template-rows: 20rem auto auto;
-			grid-template-areas:
-				"daily daily daily"
-				"time perf score"
-				"indicator indicator indicator";
-			gap: 1rem;
+		padding: 2.5rem;
+		
+		&__content {
+			flex-flow: column nowrap;
+			gap: 1.5rem;
 		}
 
-		&__indicatorContainer {
+		&__charts {
+			--column-count: 2;
+
+			gap: 1.5rem;
+			justify-items: center;
+			align-items: center;
+		}
+
+		&__indicators {
 			flex-flow: row wrap;
-			justify-content: start;
 			gap: 1rem;
+		}
+	}
+}
+
+@media screen and (width < 800px) {
+	.dashboard {
+		padding: 1.5rem;
+
+		&__charts {
+			--column-count: 1;
 		}
 	}
 }

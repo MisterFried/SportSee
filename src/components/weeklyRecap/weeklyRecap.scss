@@ -1,0 +1,108 @@
+.weeklyRecap {
+	grid-column: span 3;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-rows: auto 1fr;
+	grid-template-areas:
+		"title legend"
+		"chart chart";
+	gap: 1rem;
+
+	width: 100%;
+	height: 100%;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	border: 1px solid var(--clr-textLight);
+
+	background-color: var(--clr-chart-background);
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+
+	&__title {
+		grid-area: title;
+
+		padding: 0.5rem 1rem;
+
+		font-size: 1.75rem;
+		font-weight: 600;
+		color: var(--clr-text);
+	}
+
+	&__legend {
+		grid-area: legend;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 3rem;
+
+		padding: 0.5rem 1rem;
+
+		span {
+			position: relative;
+
+			font-size: 1.25rem;
+			font-weight: 500;
+			color: var(--clr-text);
+
+			&::before {
+				content: "";
+				position: absolute;
+				inset: 50% auto auto -1.25rem;
+				translate: 0 -50%;
+
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+			}
+
+			&:nth-child(1)::before {
+				background-color: var(--clr-primary-300);
+			}
+
+			&:nth-child(2)::before {
+				background-color: var(--clr-primary-500);
+			}
+		}
+	}
+
+	&__chart {
+		grid-area: chart;
+
+		svg {
+			width: 100%;
+			height: 100%;
+		}
+
+		.tooltip-weeklyRecap {
+			position: absolute;
+
+			padding: 0.5rem;
+			border: 1px solid var(--clr-text);
+			border-radius: 5px;
+
+			background-color: var(--clr-main-background);
+			color: var(--clr-text);
+		}
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	.weeklyRecap {
+		grid-column: span 2;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.weeklyRecap {
+		grid-column: span 1;
+
+		&__title {
+			font-size: 1.25rem;
+		}
+
+		&__legend {
+			span {
+				font-size: 1rem;
+			}
+		}
+	}
+}
